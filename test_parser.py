@@ -21,6 +21,7 @@ with open(example_file, 'rb') as f:
     with open(output_file, 'w') as of:
         reader = csv.reader(f)
         writer = csv.writer(of, delimiter=',')
+        writer.writerow(["PICKUP_TIME", "ELAPSED_RIDE_TIME", "PICKUP_GEOHASH", "DROPOFF_GEOHASH", "RIDE_DISTANCE"])
         for row in reader:
             try:
                 start_time = datetime.strptime(row[1], DATE_FORMAT)
@@ -38,11 +39,11 @@ with open(example_file, 'rb') as f:
                 if not dropoff_gh.startswith("dr"):
                     continue
 
-                output_row = [start_time_utc, elapsed_time, pickup_gh, dropoff_gh,drive_dis]
+                output_row = [start_time_utc, elapsed_time, pickup_gh, dropoff_gh, drive_dis]
                 writer.writerow(output_row)
 
                 print(output_row)
-                 
+
             except Exception as exc:
                 # Make sure that the data in the lat / long columns are floats
                 print exc
