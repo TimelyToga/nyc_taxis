@@ -24,6 +24,9 @@ with open(example_file, 'rb') as f:
         for row in reader:
             try:
                 start_time = datetime.strptime(row[1], DATE_FORMAT)
+                end_time = datetime.strptime(row[2], DATE_FORMAT)
+
+                elapsed_time = str(end_time - start_time)
                 start_time_utc = calendar.timegm(start_time.utctimetuple())
 
                 pickup_gh = encode(float(row[6]), float(row[5]))
@@ -34,10 +37,10 @@ with open(example_file, 'rb') as f:
                 if not dropoff_gh.startswith("dr"):
                     continue
 
+                output_row = [start_time_utc, elapsed_time, pickup_gh, dropoff_gh]
+                writer.writerow(output_row)
 
-                writer.writerow([start_time_utc, pickup_gh, dropoff_gh])
-
-                print("START: {}, END: {}".format(pickup_gh, dropoff_gh))
+                print(output_row)
             except Exception as exc:
                 # Make sure that the data in the lat / long columns are floats
                 print exc
