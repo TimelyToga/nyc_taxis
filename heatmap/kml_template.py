@@ -21,10 +21,10 @@ header="""<?xml version="1.0" encoding="UTF-8"?>
             <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
         </IconStyle>
         <LineStyle>
-            <color>ff0000aa</color>
+            <color>7f0000aa</color>
         </LineStyle>
         <PolyStyle>
-            <color>ff0000aa</color>
+            <color>7f0000aa</color>
         </PolyStyle>
     </Style>
     <Style id="redbox2">
@@ -36,10 +36,10 @@ header="""<?xml version="1.0" encoding="UTF-8"?>
             <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
         </IconStyle>
         <LineStyle>
-            <color>ff0000aa</color>
+            <color>7f0000aa</color>
         </LineStyle>
         <PolyStyle>
-            <color>ff0000aa</color>
+            <color>7f0000aa</color>
         </PolyStyle>
     </Style>
 <StyleMap id="orangebox">
@@ -61,10 +61,10 @@ header="""<?xml version="1.0" encoding="UTF-8"?>
             <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
         </IconStyle>
         <LineStyle>
-            <color>ff0076fe</color>
+            <color>7f0076fe</color>
         </LineStyle>
         <PolyStyle>
-            <color>ff0076fe</color>
+            <color>7f0076fe</color>
         </PolyStyle>
     </Style>
     <Style id="orangebox2">
@@ -76,10 +76,10 @@ header="""<?xml version="1.0" encoding="UTF-8"?>
             <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
         </IconStyle>
         <LineStyle>
-            <color>ff0076fe</color>
+            <color>7f0076fe</color>
         </LineStyle>
         <PolyStyle>
-            <color>ff0076fe</color>
+            <color>7f0076fe</color>
         </PolyStyle>
     </Style>
 <StyleMap id="yellowbox">
@@ -101,10 +101,10 @@ header="""<?xml version="1.0" encoding="UTF-8"?>
             <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
         </IconStyle>
         <LineStyle>
-            <color>ff00ffff</color>
+            <color>7f00ffff</color>
         </LineStyle>
         <PolyStyle>
-            <color>ff00ffff</color>
+            <color>7f00ffff</color>
         </PolyStyle>
     </Style>
     <Style id="yellowbox1">
@@ -116,10 +116,10 @@ header="""<?xml version="1.0" encoding="UTF-8"?>
             <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
         </IconStyle>
         <LineStyle>
-            <color>ff00ffff</color>
+            <color>7f00ffff</color>
         </LineStyle>
         <PolyStyle>
-            <color>ff00ffff</color>
+            <color>7f00ffff</color>
         </PolyStyle>
     </Style>
     <StyleMap id="greenbox">
@@ -141,10 +141,10 @@ header="""<?xml version="1.0" encoding="UTF-8"?>
             <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
         </IconStyle>
         <LineStyle>
-            <color>ff00cc00</color>
+            <color>7f00cc00</color>
         </LineStyle>
         <PolyStyle>
-            <color>ff00cc00</color>
+            <color>7f00cc00</color>
         </PolyStyle>
     </Style>
     <Style id="greenbox2">
@@ -156,10 +156,10 @@ header="""<?xml version="1.0" encoding="UTF-8"?>
             <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
         </IconStyle>
         <LineStyle>
-            <color>ff00cc00</color>
+            <color>7f00cc00</color>
         </LineStyle>
         <PolyStyle>
-            <color>ff00cc00</color>
+            <color>7f00cc00</color>
         </PolyStyle>
     </Style>
     """

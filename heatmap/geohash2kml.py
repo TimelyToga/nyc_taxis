@@ -1,6 +1,8 @@
 ﻿#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys
+import math
+
 reload(sys)
 sys.setdefaultencoding("utf-8")
 import geohash
@@ -25,10 +27,10 @@ class KmlMaker(object):
         counts = {}
         for line in open(self.filename,"rU"):
             (geohashcode, count) = line.strip().split(",")
-            self.locations[geohashcode] = count
+            self.locations[geohashcode] = math.log(float(count)) / math.log(2)
         print 'Done loading geohashcode counts.'
 
-    def get_template(self,input_value,color_ramp=[4,7,15]):
+    def get_template(self,input_value,color_ramp=[2,3,5]):
         low = color_ramp[0]
         medium = color_ramp[1]
         high = color_ramp[2]
@@ -57,7 +59,7 @@ class KmlMaker(object):
             #TODO: remove this constraint for visualization
             if value > 40:
                 value = 40
-            height = value * 400
+            height = value * 600
             height = str(height)
             poly = poly.replace("elevation",height)
             t = t.replace("__name__",key)
@@ -97,4 +99,4 @@ if __name__ == "__main__":
     kml = KmlMaker(input_file)
     kml.loadLocations()
     #kml.simple_kml_output()
-    kml.advanced_kml_output(output_filename=output_file, color_ramp=[300,800,1600], polygon_height=1)
+    kml.advanced_kml_output(output_filename=output_file, color_ramp=[3,6,10], polygon_height=1)
