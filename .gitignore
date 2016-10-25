@@ -2,3 +2,5 @@ data/
 env/
 *.csv
 .DS_Store
+*.pyc
+*.py.swp
