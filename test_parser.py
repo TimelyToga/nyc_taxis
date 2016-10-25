@@ -19,7 +19,8 @@ FULL_PRECISION = 12
 #
 # print my_geohash
 
-with open(example_file, 'rb') as f:
+written_row_count = 0
+with open(big_file, 'rb') as f:
     with open(output_file, 'w') as of:
         reader = csv.reader(f)
         writer = csv.writer(of, delimiter=',')
@@ -47,7 +48,9 @@ with open(example_file, 'rb') as f:
                 output_row = [start_time_utc, elapsed_time.seconds, pickup_gh, pickup_gh6, dropoff_gh, dropoff_gh6, drive_dis]
                 writer.writerow(output_row)
 
-                print(output_row)
+                written_row_count += 1
+                if written_row_count % 100000 == 0:
+                    print("Finished \t\t{}k rows".format(written_row_count / 1000))
 
             except Exception as exc:
                 # Make sure that the data in the lat / long columns are floats
