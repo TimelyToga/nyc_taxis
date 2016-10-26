@@ -4,3 +4,7 @@ env/
 .DS_Store
 *.pyc
 *.py.swp
+
+# Midterm report 
+midterm_report.*
+!midterm_report.tex
