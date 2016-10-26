@@ -8,3 +8,4 @@ env/
 # Midterm report 
 midterm_report.*
 !midterm_report.tex
+!midterm_report.bib
