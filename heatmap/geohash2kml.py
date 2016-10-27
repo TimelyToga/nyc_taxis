@@ -10,8 +10,8 @@ from kml_template import header, footer, box_template, red_template, orange_temp
 
 OUTPUT_TYPES = ['num_rides', 'ride_distance']
 
-NR_COLORS = [4,7,11]
-NR_PHEIGHT = 400
+NR_COLORS = [4,7,13]
+NR_PHEIGHT = 600
 
 RD_COLORS = [2, 2.5, 3.3]
 RD_PHEIGHT = 1300
