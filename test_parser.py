@@ -12,13 +12,7 @@ DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 PRECISION = 6
 FULL_PRECISION = 12
 
-# lat = 40.67956543
-# long_coord = -73.98455048
-#
-# my_geohash = encode(lat, long_coord)
-#
-# print my_geohash
-
+# Start parsing the input file, and open output file
 written_row_count = 0
 with open(big_file, 'rb') as f:
     with open(output_file, 'w') as of:
@@ -34,14 +28,17 @@ with open(big_file, 'rb') as f:
                 start_time_utc = calendar.timegm(start_time.utctimetuple())
                 drive_dis = float(row[4])
 
+                # Pickup Geohash
                 pickup_gh6 = encode(float(row[6]), float(row[5]), precision=PRECISION)
                 pickup_gh = encode(float(row[6]), float(row[5]), precision=FULL_PRECISION)
                 if not pickup_gh.startswith("dr"):
                     continue
 
+                # Dropoff Geohash
                 dropoff_gh6 = encode(float(row[10]), float(row[9]), precision=PRECISION)
                 dropoff_gh = encode(float(row[10]), float(row[9]), precision=FULL_PRECISION)
 
+                # Try and make sure the geohash is somewhat close to NYC
                 if not dropoff_gh.startswith("dr"):
                     continue
 
