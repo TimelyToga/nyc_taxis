@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python
+﻿#!/usr/bin/env pythonG
 # -*- coding: utf-8 -*-
 import sys
 import math
@@ -7,6 +7,14 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 import geohash
 from kml_template import header, footer, box_template, red_template, orange_template, yellow_template, green_template
+
+OUTPUT_TYPES = ['num_rides', 'ride_distance']
+
+NR_COLORS = [4,7,11]
+NR_PHEIGHT = 400
+
+RD_COLORS = [2, 2.5, 3.3]
+RD_PHEIGHT = 1300
 
 class KmlMaker(object):
     def __init__(self,filename):
@@ -90,13 +98,35 @@ class KmlMaker(object):
         f.write(footer)
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print "Usage: python geohash2kml.py <input file> <output file>"
+    if len(sys.argv) != 4:
+        print "Usage: python geohash2kml.py <mode> <input file> <output file>"
         sys.exit(-1)
+    
+    output_type = sys.argv[1]
+    if output_type not in OUTPUT_TYPES:
+        print "Please select one of the following modes: {}".format(OUTPUT_TYPES)
+        sys.exit(1)
 
-    input_file = sys.argv[1]
-    output_file = sys.argv[2]
+    # Collect file arguments
+    input_file = sys.argv[2]
+    output_file = sys.argv[3]
+
+    # Create helper object
     kml = KmlMaker(input_file)
     kml.loadLocations()
-    #kml.simple_kml_output()
-    kml.advanced_kml_output(output_filename=output_file, color_ramp=[3,6,10], polygon_height=400)
+    
+    # Retrieve correct settings for current mode
+    cur_color_ramp = []
+    pheight = 1
+    if output_type == OUTPUT_TYPES[0]:
+        cur_color_ramp = NR_COLORS
+        pheight = NR_PHEIGHT
+    elif output_type == OUTPUT_TYPES[1]:
+        cur_color_ramp = RD_COLORS
+        pheight = RD_PHEIGHT
+    else:
+        print "Something went very very wrong"
+        sys.exit(1)
+    
+    # Generate the KML
+    kml.advanced_kml_output(output_filename=output_file, color_ramp=cur_color_ramp, polygon_height=pheight)
