@@ -18,7 +18,7 @@ with open(big_file, 'rb') as f:
     with open(output_file, 'w') as of:
         reader = csv.reader(f)
         writer = csv.writer(of, delimiter=',')
-        writer.writerow(["PICKUP_TIME", "ELAPSED_RIDE_TIME", "PICKUP_GEOHASH12", "PICKUP_GEOHASH6" "DROPOFF_GEOHASH12", "DROPOFF_GEOHASH6", "RIDE_DISTANCE"])
+        writer.writerow(["PICKUP_TIME", "ELAPSED_RIDE_TIME", "PICKUP_GEOHASH12", "PICKUP_GEOHASH6", "DROPOFF_GEOHASH12", "DROPOFF_GEOHASH6", "RIDE_DISTANCE"])
         for row in reader:
             try:
                 start_time = datetime.strptime(row[1], DATE_FORMAT)
