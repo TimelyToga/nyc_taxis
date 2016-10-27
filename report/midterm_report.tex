@@ -5,6 +5,7 @@
 \usepackage{fullpage}
 \usepackage{subcaption}
 \usepackage{fancyvrb} % Includes the \VerbatimInput command to read in code files
+\usepackage{float}        % So we can put a figure RIGHT FUCKING HERE
 
 \graphicspath{ {images/} }
 
@@ -37,96 +38,122 @@ Each row contains start and end time, pickup and drop-off coordinates, number of
 
 
 \section{Data Processing}
-The data was downloaded as .csv file, automatically by python script. After
-that, we created python code to select the columns of interest, map the
-loacation information(recorded by latitude and longitude) into geohash string,
-creat frequency table for each locations and organize time format for
-analysis. Of all the columns the original data, we focused on pickup/drop off
-locations pickup/drop off time and fare/tip/total amount. 
+The data was automatically downloaded as a {\tt .csv} file by a python script we wrote. After that, we created python code to select the columns of interest, map the location information(recorded by latitude and longitude) into a geohash string, create frequency table for each location, and translate the given timestamp into something more helpful for analysis (which we found to be Unix time). Of all the columns from the original data, we focused on pickup/drop off locations, pickup/drop off time, and the dollar amounts for fare/tip/total price. 
 
-\begin{figure}
-\centering
+
+\section{Interesting Pieces of our Dataset}
+\subsection{Statistics from the Data}
+Figure \ref{fig:bstats} shows some statistics from the Yellow Taxi Dataset \cite{dataset}, from which we have found some anomalous characteristics. \ref{sub:payment} shows the frequency of payment methods used. Credit card was used the most frequently. No charge and disputed prices also occurred at a notable frequency. \ref{sub:num_pass} shows the frequency of the number of passengers. From the subplot, we most of the case there was only one passenger in the taxi. \ref{sub:tamount} shows the frequency of the total amounts charged to passengers. It is clear that as the total amount paid increases, the frequency decreases.
+
+% First Figure 
+\begin{figure}[H]
+
+\begin{tabular}{cc}
+
 \begin{subfigure}{.5\linewidth}
   \centering
   \includegraphics[width=.8\linewidth]{frequency-payment}
   \caption{Frequency of different payment methods}
-  \label{fig:sub1}
-\end{subfigure}%
+  \label{sub:payment}
+\end{subfigure} & 
 \begin{subfigure}{.5\linewidth}
   \centering
   \includegraphics[width=.8\linewidth]{passange_frequency}
-  \caption{Frequency of the number of passangers}
-  \label{fig:sub2}
-\end{subfigure}
-
+  \caption{Frequency of the number of passengers}
+  \label{sub:num_pass}
+\end{subfigure} \\\\
 \begin{subfigure}{.5\linewidth}
   \centering
   \includegraphics[width=.8\linewidth]{frequency-totalpayment}
   \caption{Frequency of the total payment amount}
-  \label{fig:sub3}
-\end{subfigure}%
-\begin{subfigure}{.5\linewidth}
-  \centering
-  \includegraphics[width=.8\linewidth]{frequency-decimal-totalamount}
-  \caption{Frequency of the decimal of total paymount amount}
-  \label{fig:sub4}
-\end{subfigure}
-
+  \label{sub:tamount}%
+\end{subfigure} &
 \begin{subfigure}{.5\linewidth}
   \centering
   \includegraphics[width=.8\linewidth]{frequency-tipamount}
   \caption{Frequency of the tip amount}
-  \label{fig:sub5}
+  \label{sub:tip_amount}
+\end{subfigure} \\ 
+
+\end{tabular}
+
+\caption{Basic ride statistics}
+\label{fig:bstats}
+\end{figure}
+
+
+\subsection{Analysis of the Frequency of Certain Decimal Places in the Price}
+The prices of the taxi rides have peculiar distributions that show us a little about human psychology and a lot about the way that the taxi pricing scheme works. From Figure \ref{sub:dec_tip_amount} we can see that the that tips are periodic fluctuations is frequency at numbers that are divisible by 5 and the fare amount (pre-tax / other charges) is divisible by \$$0.50$ over $99.9\%$ of the time  (New Yorkers like round numbers). However, we noticed that the total price paid (Figure \ref{sub:dec_tamount}) is either \$$0.30$ and \$$0.80$ in over $99.9\%$ of taxi rides. We originally thought this must be the MTA Tax that started being levied in 2015, but $99.5\%$ of passengers pay a \$$0.50$ MTA tax. After a good bit of head scratching, we noticed that $99.95\%$ of passengers pay a \$$0.30$ "improvement surcharge" and thus puts the final price at the odd \$$0.30$ or \$$0.80$.
+
+
+% Figure 2
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\linewidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{frequency-decimal-totalamount}
+  \caption{Frequency of the decimal of total amount paid}
+  \label{sub:dec_tamount}
 \end{subfigure}%
 \begin{subfigure}{.5\linewidth}
   \centering
   \includegraphics[width=.8\linewidth]{frequency-decimal-tipamount}
   \caption{Frequency of the decimal of tip amount}
-  \label{fig:sub6}
-\end{subfigure}
-
+  \label{sub:dec_tip_amount}
+\end{subfigure}%
+\vspace{1cm}
 \begin{subfigure}{\linewidth}
   \centering
   \includegraphics[width=.4\linewidth]{frequency-decimal-fareamount}
   \caption{Frequency of fare amount decimal}
   \label{fig:sub7}
-\end{subfigure}
-\caption{Statistics from passangers and fare}
-\label{fig:test}
+\end{subfigure}%
+	
+\caption{Frequency of decimal amounts in various parts of the fare}
+\label{fig:decimals}
 \end{figure}
 
-\begin{figure}
+
+\subsection{Changes in Ride Characters based on Time of Ride}
+
+Figure \ref{fig:ride_stats} shows the fluctuation of number of rides, average distance of rides and average duration, with respect to the 24 hours in a day, 7 days in a week and 31 days in a month. Our data is from January 2016, so the monthly view shouldn't be taken as an aggregate representation about rides at certain times of the month, but rather a case study of the rides done in January, 2015. In the figure, each subfigure contains two lines with different Y scales. The left column is the numbers of rides or average distance, whereas the right column is number of rides or average duration. The three rows correspond to hours in a day, days in a week and days in a month.
+
+Column-wise, it shows that the average distance shows negative relation with number of rides, while average duration shows positive relation with number of rides. It is intuitive that with more rides, the traffic is heavier thus the average duration increases. It is relatively hard to interpret the negative correlation between number of rides and the average distance of rides. Another interesting finding is the plunge on number of riders around Jan. 23, in the plot of days in month (e,f). This was due to the blizzard that happened on January 22nd, 2016. It took a couple of days for the number of rides to recover after the blizzard. The average distance and average duration also spiked in the days after the blizzard. We hypothesize that some people were displaced / stranded because of the snow and were finally able able to return home, thus increasing average utilization of the taxis. Where utilization is the ratio of the time that all taxis are spent with and without passengers in them. 
+
+
+% Start of the second Figure
+\begin{figure}[H]
 \centering
 \begin{subfigure}{.5\linewidth}
   \centering
   \includegraphics[width=.8\linewidth]{numride_tod}
-  \caption{number of ride \& average distance (miles) in 24 hours}
+  \caption{Number of rides \& avg. distance (miles) in 24 hours}
   \label{fig:sub1}
 \end{subfigure}%
 \begin{subfigure}{.5\linewidth}
   \centering
   \includegraphics[width=.8\linewidth]{numride_tod_dur}
-  \caption{number of ride \& average duration in (min) 24 hours}
+  \caption{Number of rides \& avg. duration in (min) 24 hours}
   \label{fig:sub2}
 \end{subfigure}
 
 \begin{subfigure}{.5\linewidth}
   \centering
   \includegraphics[width=.8\linewidth]{numride_dow}
-  \caption{number of ride \& average distance (miles) in 7 days}
+  \caption{Number of rides \& avg. distance (miles) in 7 days}
   \label{fig:sub3}
 \end{subfigure}%
 \begin{subfigure}{.5\linewidth}
   \centering
   \includegraphics[width=.8\linewidth]{numride_dow_dur}
-  \caption{number of ride \& average duration (min) in 7 days}
+  \caption{Number of rides \& avg. duration (min) in 7 days}
   \label{fig:sub4}
 \end{subfigure}
 
 \begin{subfigure}{.5\linewidth}
   \centering
   \includegraphics[width=.8\linewidth]{numride_dom}
-  \caption{number of ride \& average distance (miles) in 31 days}
+  \caption{Number of rides \& avg. distance (miles) in 31 days}
   \label{fig:sub5}
 \end{subfigure}%
 \begin{subfigure}{.5\linewidth}
@@ -137,15 +164,44 @@ locations pickup/drop off time and fare/tip/total amount.
 \end{subfigure}
 
 \caption{Statistics from number of rides, distance and duration}
-\label{fig:test}
+\label{fig:ride_stats}
 \end{figure}
 
-\section{Interesting Pieces of our Dataset}
-\subsection{Statitics from the Data}
-Figure 1 showes some statistics from the Dataset \cite{dataset}, from which we can find some interesting facts. (a) shows the frequency of payment methods used. Credit card was used the most frequently. No cash and dispute were also happening on a notable frequence. (b) shows the frequency of the number of passangers. From the subplot, we most of the case there was only one passanger in the taxi. (c) shows the frequency of different amount of payment. It is clear that as the total amount increases the frequency decreases. (d) shows the frequency of the decimal of the total fare amount. From the figure we see two clear peaks in $0.3$ and $0.8$, it is interesting that these two numbers are the most frequent decimal of the total amount. (e) shows the frequency of total amount of tips. (f) shows the frequency of the decimal of the tips. (g) shows the frequency of the decimal of total amount. It implies that people tend to round up the total amount to half dollar or a dollar. \\
+\section{Geographical Visualization of Data}
+Given that our dataset is describing how New Yorkers got around, we thought it proper to analyze the frequency of rides as they relate to each other geographically. 
 
-Figure 2 showes the fluctuation of number of rides, average distance of rides and average duration, with respect to 24 hours in a day, 7 days in a week and 31 days in a month. The data is from 2016. The month plot used the data in Janurary. In the figure, each subfigure contains two plot with different Y scale. The left column is plotted with numbers of rides and average distance whereas the right column is numbers of rides and average duration. The three rows correspond to hours in a day, days in a week and days in a month. Column-wise, it shows that the average distance shows negative relation with number of rides, while average duration shows positive relation with number of rides. It is intuitive that with more rides, the traffic is heavier thus the average duration increases. It is relatively hard to interpret the negative correlation between number of rides and the average distance of rides. Another interesting finding is the plunge on number of riders around Jan. 23, in the plot of days in month (e,f). This was due to the blizzard happened on Jan. 22. It took couple days for the number of rides to recover after the blizzard. There are also two peaks occurred after the blizzard, on the average distance and average duration. It seems that after the blizzard, people traveled relatively farther and since more people were taking taxi, the traffic increase the average duration. 
+\begin{figure}
 
+\begin{tabular}{cc}
+
+\begin{subfigure}{.5\linewidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{pickup_overhead.jpg}
+  \caption{Heatmap of Pickup Locations}
+  \label{sub:pu_oh}
+\end{subfigure} & 
+\begin{subfigure}{.5\linewidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{dropoff_overhead.jpg}
+  \caption{Heatmap of Drop-off Locations}
+  \label{sub:do_oh}
+\end{subfigure} \\\\
+\begin{subfigure}{.5\linewidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{pickup_ne.jpg}
+  \caption{Heightmap of Pickup Locations}
+  \label{sub:tamount}%
+\end{subfigure} &
+\begin{subfigure}{.5\linewidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{dropoff_ne.jpg}
+  \caption{Heightmap of Dropoff Locations}
+  \label{sub:tip_amount}
+\end{subfigure} \\ 
+
+\end{tabular}
+
+\end{figure}
 
 \vfill
 
