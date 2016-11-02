@@ -176,14 +176,13 @@ Figure \ref{fig:ride_stats} shows the fluctuation of number of rides, average di
 Column-wise, the average distance shows negative correlation with rides numbers whereas the average duration shows positive relation with number of rides. It is intuitive that with more rides, the traffic is heavier thus increases average duration. However, it is hard to interpret the negative correlation between number of rides and the average distance. Another interesting fact is the plunge on riders around Jan. 23, in the plot of days in month (e,f). This was due to the blizzard that happened on January 22nd, 2016. It took a couple of days for the number to recover. The average distance and average duration also spiked in the days after the blizzard. We hypothesize that some people were displaced / stranded because of the snow and were finally able able to return home, thus increasing average utilization of the taxis. Where utilization is the ratio of the time that all taxis are spent with and without passengers in them. 
 
 \section{Geographical Visualization}
-Given that our dataset is describing how New Yorkers got around, we thought it proper to analyze the frequency of rides as they relate to each other geographically. Figure \ref{fig:heatmap} shows heat maps of the pickup and drop-off locations for the yellow taxi rides from January 2016. Figure \ref{sub:pu_oh} and Figure \ref{sub:pu_ne} are heatmap of pickup frequencies in the locations, generated from different view angle. And Figure \ref{sub:do_oh} and \ref{sub:do_ne} are for dropoff locations. From the figures, we see that rides around Manhattan are significantly more popular, as most yellow taxis will immediately return after making a drop-off outside the zone. However, as you can see from Figure \ref{sub:do_oh}, the drop-off area for rides is far wider than that of pickups because people can only get a yellow taxi while down-town. \\
+Given that our dataset is describing how New Yorkers got around, we thought it proper to analyze the frequency of rides as they relate to each other geographically. Figure \ref{fig:heatmap} shows heat maps of the pickup and drop-off locations for the yellow taxi rides from January 2016. Figure \ref{sub:pu_oh} and Figure \ref{sub:pu_ne} are heatmap of pickup frequencies in the locations, generated from different view angle. And Figure \ref{sub:do_oh} and \ref{sub:do_ne} are for dropoff locations. From the figures, we see that rides around Manhattan are significantly more popular, as most yellow taxis will immediately return after making a drop-off outside the zone. However, as you can see from Figure \ref{sub:do_oh}, the drop-off area for rides is far wider than that of pickups because people can only get a yellow taxi while down-town.
 
 There are four notable zones of high ride volume: Manhattan and JFK / Laguardia / Newark Airports. Newark airport sees considerably more drop-offs than pickups, while the numbers are fairly similar for Laguardia and JFK. It is unclear from this dataset whether fewer people take a taxi back from Newark than take a taxi to be dropped off or whether there are only fewer yellow taxis that pickup passengers there (for reasons discussed in above paragraph). 
 
 \begin{figure}
 
 \begin{tabular}{cc}
-
 \begin{subfigure}{.5\linewidth}
   \centering
   \includegraphics[width=.8\linewidth]{pickup_overhead.jpg}
@@ -208,13 +207,13 @@ There are four notable zones of high ride volume: Manhattan and JFK / Laguardia 
   \caption{Heightmap of Dropoff Locations: 3D}
   \label{sub:do_ne}
 \end{subfigure} \\ 
-
 \end{tabular}
-\label{fig:heatmap}
+
 \caption{Maps of Activity by type}
+\label{fig:heatmap}
 \end{figure}
 
-\section{Future Plan}
+\section{Future Plans}
 For next step, we will try to combine multiple attributes and analyze the relationship between them. For example, it will be really interesting to combine the location information with time, to investigate the taxi popularity in different regions with regard to time. We could also look into the tip amount with respect to travel duration, distance and time. These combination of different attributes will help us understand human behaviors. Moreover, with the heatmap visualization, the temporal change of distribution could be easily presented and perceived. A .gif image could be used to show the longitudinal evolution of the changes. 
 
 \vfill
